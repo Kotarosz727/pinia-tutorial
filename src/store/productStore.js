@@ -1,15 +1,18 @@
 import { defineStore } from 'pinia'
-import productData from '@/data/products.json'
 
 // unique across project
 export const useProductStore = defineStore('productStore', {
     state: () => {
         return {
-            productData,
+            products: []
         }
     },
   
-    // getters: {},
+    actions: {
+        async fill() {
+            this.products = (await import('@/data/products.json')).default
+        }
+    },
 
-    // actions: {},
+    // getters: {},
 });

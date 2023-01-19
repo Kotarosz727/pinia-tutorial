@@ -1,20 +1,20 @@
-<script setup>
-import TheHeader from "@/components/TheHeader.vue";
-import ProductCard from "@/components/ProductCard.vue";
-import products from "@/data/products.json";
-import { useProductStore } from "./store/productStore";
-useProductStore()
-</script>
-
 <template>
   <div class="container">
     <TheHeader />
     <ul class="sm:flex flex-wrap lg:flex-nowrap gap-5">
       <ProductCard
-        v-for="product in products"
+        v-for="product in productStore.products"
         :key="product.name"
         :product="product"
       />
     </ul>
   </div>
 </template>
+
+<script setup>
+import TheHeader from "@/components/TheHeader.vue";
+import ProductCard from "@/components/ProductCard.vue";
+import { useProductStore } from "./store/productStore";
+const productStore = useProductStore()
+productStore.fill()
+</script>
