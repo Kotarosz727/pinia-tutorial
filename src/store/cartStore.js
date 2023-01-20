@@ -11,8 +11,6 @@ export const useCartStore = defineStore('cartStore', {
         addItems(count, item) {
             count = parseInt(count)
             
-            console.log('debug', count, item)
-            
             for(let i = 0; i < count; i++) {
                 item = {...item}
                 this.cart.push(item)
