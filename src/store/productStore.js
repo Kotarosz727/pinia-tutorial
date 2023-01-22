@@ -14,5 +14,7 @@ export const useProductStore = defineStore('productStore', {
         }
     },
 
-    // getters: {},
+    getters: {
+        count: (state) => state.products.length,
+    },
 });
