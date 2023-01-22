@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { sum, groupBy } from "lodash";
+import { groupBy } from "lodash";
 
 export const useCartStore = defineStore('cartStore', {
     state: () => {
