@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { groupBy } from "lodash";
+import { parse } from "@vue/compiler-dom";
 
 export const useCartStore = defineStore('cartStore', {
     state: () => {
@@ -28,5 +29,10 @@ export const useCartStore = defineStore('cartStore', {
         deleteItem(name) {
             this.cart = this.cart.filter(item => item.name !== name)
         },
+        addCount(item, count) {
+            count = parseInt(count)
+            this.deleteItem(item.name)
+            this.addItems(count, item)
+        }
     }
 });
