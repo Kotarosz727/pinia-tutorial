@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { groupBy } from "lodash";
-import { parse } from "@vue/compiler-dom";
+import { useAuthStore } from "./userAuthStore";
 
 export const useCartStore = defineStore('cartStore', {
     state: () => {
@@ -12,12 +12,22 @@ export const useCartStore = defineStore('cartStore', {
     getters: {
         count: (state) => state.cart.length,
         isEmpty: (state) => state.count === 0,
-        groupedByName: (state) => groupBy(state.cart, 'name'),
+        groupedByName: (state) => {
+            const grouped = groupBy(state.cart, 'name')
+            const sorted = Object.keys(grouped).sort()
+            let sortedItems = new Object;
+            sorted.forEach((key) => sortedItems[key] = grouped[key])
+            return sortedItems
+        },
         groupCount: (state) => (name) => state.groupedByName[name].length,
         totalPrice: (state) => state.cart.reduce((previous, current) => previous + current.price, 0)
     },
 
     actions: {
+        checkOut() {
+            const userStore = useAuthStore();  
+            alert(`${userStore.authUser} buy ${this.count} $${this.totalPrice}`)
+        },
         addItems(count, item) {
             count = parseInt(count)
             
