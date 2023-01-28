@@ -21,5 +21,20 @@ const productStore = useProductStore()
 productStore.fill()
 
 const cartStore = useCartStore()
+cartStore.$onAction(
+  ({
+    name, // name of the action
+    store, // store instance, same as `someStore`
+    args, // array of parameters passed to the action
+    after, // hook after the action returns or resolves
+    onError, // hook if the action throws or rejects
+  }) => {
+    if (name === 'addItems') {
+      after(() => {
+        console.log(args[0])
+      });
+    }
+  }
+);
 
 </script>
