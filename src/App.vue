@@ -1,7 +1,11 @@
 <template>
   <div class="container">
     <TheHeader />
-    <button @click="undo()">Undo</button>
+    <div class="flex justify-end">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-5" @click="undo()">
+        Undo
+      </button>
+    </div>
     <ul class="sm:flex flex-wrap lg:flex-nowrap gap-5">
       <ProductCard
         v-for="product in productStore.products"
