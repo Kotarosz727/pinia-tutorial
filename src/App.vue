@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <TheHeader />
+    <button @click="undo()">Undo</button>
     <ul class="sm:flex flex-wrap lg:flex-nowrap gap-5">
       <ProductCard
         v-for="product in productStore.products"
@@ -17,6 +18,7 @@ import TheHeader from "@/components/TheHeader.vue";
 import ProductCard from "@/components/ProductCard.vue";
 import { useProductStore } from "./store/productStore";
 import { useCartStore } from "./store/cartStore"
+import { reactive } from "vue";
 const productStore = useProductStore()
 productStore.fill()
 
@@ -31,10 +33,25 @@ cartStore.$onAction(
   }) => {
     if (name === 'addItems') {
       after(() => {
-        console.log(args[0])
+        console.log(args[0], args[1])
       });
     }
   }
 );
+const history = reactive([]);
+history.push(JSON.stringify(cartStore.$state))
+
+cartStore.$subscribe((mutaion, state) => {
+  console.log('mutation', mutaion)
+  history.push(JSON.stringify(state))
+  console.log('history', history)
+})
+
+const undo = () => {
+  if (history.length === 1) return
+
+  history.pop()
+  cartStore.$state = JSON.parse(history.at(-1))
+}
 
 </script>
